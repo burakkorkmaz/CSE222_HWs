@@ -59,8 +59,8 @@ public class Person {
 
     @Override
     public String toString() {
-        return "| ID: " + getID() + "| Name: " + getName() + "| Surname: " + getSurname() + "| Username: " +
-                getUsername() + "| Password: " + getPassword() + " |\n";
+        return "| ID: " + getID() + " | Name: " + getName() + " | Surname: " + getSurname() + " | Username: " +
+                getUsername() + " | Password: " + getPassword() + " |\n";
     }
 }
 

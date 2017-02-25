@@ -3,9 +3,9 @@
  */
 public interface ManagementSystem {
 
-    void readFile(String filename);
+    void readFile();
 
-    void writeFile(String filename);
+    void writeFile();
 
     String login(String name, String pass);
 
