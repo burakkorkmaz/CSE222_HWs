@@ -2,9 +2,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Database db = new Database("users.csv");
-            db.readFile();
-            db.writeFile();
+            Database db = new Database();
+            db.readBookFile("books.csv");
+//            db.writeUserFile("users.csv");
 
         }
         catch (Exception e){
