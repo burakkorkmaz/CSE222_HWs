@@ -30,7 +30,19 @@ public class Database implements ManagementSystem {
     private ArrayList<Person> users = new ArrayList<>();
     private ArrayList<Book> books = new ArrayList<>();
 
+    public Database(){
+        readUserFile("users.csv");
+        readBookFile("books.csv");
 
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    public ArrayList<Person> getUsers() {
+        return users;
+    }
 
     /**
      * Reads from user file and adds read records to Array List .

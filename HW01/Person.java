@@ -8,6 +8,12 @@ public class Person {
     private String surname;
     private String username;
     private String password;
+    private Database  db;
+
+    public Person(){
+        db = new Database();
+
+    }
 
     public Person(String ID, String name, String surname, String username, String password) {
         setID(ID);
@@ -15,6 +21,10 @@ public class Person {
         setSurname(surname);
         setUsername(username);
         setPassword(password);
+    }
+
+    public Database getDb() {
+        return db;
     }
 
     public String getID() {

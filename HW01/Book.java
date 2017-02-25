@@ -69,6 +69,6 @@ public class Book {
     @Override
     public String toString() {
         return "| ISBN: " + getISBN() + " | Name: " + getName() + " | Year: " + getYear() + " | Author: " +
-                getAuthor() + " | B: " + getBorrower() + " | Borrow Date: " + getBorrowDate() + " |\n";
+                getAuthor() + " | Borrower: " + getBorrower() + " | Borrow Date: " + getBorrowDate() + " |\n";
     }
 }
