@@ -71,4 +71,15 @@ public class Book {
         return "| ISBN: " + getISBN() + " | Name: " + getName() + " | Year: " + getYear() + " | Author: " +
                 getAuthor() + " | Borrower: " + getBorrower() + " | Borrow Date: " + getBorrowDate() + " |\n";
     }
+
+    @Override
+    public boolean equals(Object obs){
+
+        if(obs instanceof Book){
+            Book bk = (Book) obs;
+            return this.name==bk.name;
+        }
+        return false;
+
+    }
 }

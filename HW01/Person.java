@@ -11,8 +11,6 @@ public class Person {
     private Database  db;
 
     public Person(){
-        db = new Database();
-
     }
 
     public Person(String ID, String name, String surname, String username, String password) {
@@ -21,6 +19,10 @@ public class Person {
         setSurname(surname);
         setUsername(username);
         setPassword(password);
+    }
+
+    public void initializeDB(Database db){
+        this.db=db;
     }
 
     public Database getDb() {
@@ -71,6 +73,16 @@ public class Person {
     public String toString() {
         return "| ID: " + getID() + " | Name: " + getName() + " | Surname: " + getSurname() + " | Username: " +
                 getUsername() + " | Password: " + getPassword() + " |\n";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj instanceof Person){
+            Person pr = (Person)obj;
+            return this.ID == pr.ID;
+        }
+        return false;
     }
 }
 
