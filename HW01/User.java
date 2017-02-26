@@ -1,13 +1,29 @@
 import java.util.ArrayList;
 
 /**
- * Created by eksor on 23.02.2017.
+ * This class derived from Person class.  The class has borrowBook, returnBook methods
+ * <br>Provides borrowing a book from library or return a book to library for users
+ * <p>Created by Burak Kağan Korkmaz on 23.02.2017.</p>
  */
 public class User extends Person {
+
+    /**
+     * CONSTRUCTOR
+     * @param ID User id
+     * @param name User First Name
+     * @param surname User Last Name
+     * @param username Username
+     * @param password User Password
+     */
     public User(String ID, String name, String surname, String username, String password) {
         super(ID, name, surname, username, password);
     }
 
+    /**
+     * Gets the book user wanted from library.
+     * @param bookName Name of the Book in library
+     * @return True if succeed<br> False,  otherwise
+     */
     public boolean borrowBook(String bookName) {
 
         int bookIndex = -1;
@@ -15,7 +31,7 @@ public class User extends Person {
         ArrayList<Person> pr = getDb().getUsers();
         ArrayList<Book> bk = getDb().getBooks();
 
-        System.out.println("\nBorrowing the Book in progress...");
+        System.out.println("Borrowing the Book in progress...\n");
         for (int i = 0; i < bk.size(); ++i) {
             if (bk.get(i).getName().equals(bookName)) {
                 bookIndex = i;
@@ -28,8 +44,10 @@ public class User extends Person {
         else {
             boolean found = false;
             for (int i = 0; i < pr.size() && !found; ++i) {
-                if (pr.get(i).getID().equals(this.getID()))
+                if (pr.get(i).getID().equals(this.getID())) {
                     userIndex = i;
+                    found = true;
+                }
             }
             if (userIndex == -1){
                 System.err.println("User could not Found in database");
@@ -51,11 +69,15 @@ public class User extends Person {
             }
 
         }
-        System.out.println("\nThe book has been borrowed successfully.");
+        System.out.println("The book has been borrowed successfully.\n");
         return true;
     }
 
-
+    /**
+     * Gives the book to the library.
+     * @param bookName Name of the Book in library
+     * @return True if succeed<br> False,  otherwise
+     */
     public boolean returnBook(String bookName) {
 
         int bookIndex = -1;

@@ -1,10 +1,11 @@
-/**
- * Created by eksor on 24.02.2017.
- */
-
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ *  The Database Class holds all Library information. Reads and Writes CSV files and use Array List to manage datas.
+ *  This class has readUserFile, readBookFile, writeUserFile, writeBookFile, login and getBook, getUsers methods.
+ * <p>_Created by Burak Kağan Korkmaz on 24.02.2017.</p>
+ */
 public class Database implements ManagementSystem {
 
     /**
@@ -27,21 +28,58 @@ public class Database implements ManagementSystem {
      */
     private static final int BOOK_ATTRIBUTES = 5;
 
+    /**
+     * Users Array List
+     */
     private ArrayList<Person> users = new ArrayList<>();
+    /**
+     * Books Array List
+     */
     private ArrayList<Book> books = new ArrayList<>();
 
+    /**
+     * Constructor
+     * Reads CSV files
+     */
     public Database(){
         readUserFile("users.csv");
         readBookFile("books.csv");
 
     }
 
+    /**
+     * gets books array list.
+     * @return array list
+     */
     public ArrayList<Book> getBooks() {
         return books;
     }
 
+    /**
+     * gets users array list.
+     * @return array list
+     */
     public ArrayList<Person> getUsers() {
         return users;
+    }
+
+    public void showUsers(){
+        System.out.println("USERS DATABASE");
+        for (Person p : users)
+            System.out.println(p.toString());
+    }
+
+    public void showBooks(){
+        System.out.println("BOOKS DATABASE");
+        for (Book b : books)
+            System.out.println(b.toString());
+    }
+
+    public void showBookIDs(){
+
+        for (int i= 0; i < getBooks().size();++i){
+            System.out.println("Book id: "+ getBooks().get(i).getID()+ " Name: " + getBooks().get(i).getName());
+        }
     }
 
     /**
@@ -59,12 +97,15 @@ public class Database implements ManagementSystem {
                     if (token[i].contains(";"))
                         throw new Error("Wrong Entry detected! Please do not use semicolon in the entries.");
                 }
-                Person person = new Person(token[0], token[1], token[2], token[3], token[4]);
-                users.add(person);
 
+                Person person;
+                if(token[0].startsWith("s"))
+                    person = new Staff(token[0], token[1], token[2], token[3], token[4]);
+                else person = new User(token[0], token[1], token[2], token[3], token[4]);
+
+                users.add(person);
             }
-            for (Person p : users)
-                System.out.println(p.toString());
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -82,8 +123,8 @@ public class Database implements ManagementSystem {
     }
 
     /**
-     *
-     * @param filename
+     * Reads from books file and adds read records to Array List .
+     * @param filename The name of csv file to read
      */
     public void readBookFile(String filename) {
         String line;
@@ -100,8 +141,7 @@ public class Database implements ManagementSystem {
                 books.add(book);
 
             }
-            for (Book b : books)
-                System.out.println(b.toString());
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -119,9 +159,9 @@ public class Database implements ManagementSystem {
     }
 
     /**
+     * Writes to users file from Array List
      *
-     *
-     * @param filename
+     * @param filename The name of csv file
      */
     public void writeUserFile(String filename) {
         FileWriter stream = null;
@@ -139,9 +179,8 @@ public class Database implements ManagementSystem {
                 stream.append(DELIMITER);
                 stream.append(p.getPassword());
                 stream.append(SEPARATOR);
-
             }
-            System.out.println("\nUser Records added to CSV file Successfully.\n");
+            System.out.println("User Records added to CSV file Successfully.\n");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -158,7 +197,10 @@ public class Database implements ManagementSystem {
         }
     }
 
-
+    /**
+     * Writes to books file from Array List
+     * @param filename The name of csv file
+     */
     public void writeBookFile(String filename) {
         FileWriter stream = null;
         try {
@@ -195,14 +237,14 @@ public class Database implements ManagementSystem {
     }
 
     /**
-     * @param name
-     * @param pass
-     * @return
+     * @param name Username
+     * @param pass Password
+     * @return True if logins<br> False, otherwise
      */
-    public String login(String name, String pass) {
+    public Person login(String name, String pass) {
         for(Person p : users){
-            if(p.getName() == name && p.getPassword() == pass){
-                return p.getID();
+            if(p.getUsername().equals(name) && p.getPassword().equals(pass)){
+                return p;
             }
         }
         return null;

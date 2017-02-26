@@ -1,5 +1,6 @@
 /**
- * Created by eksor on 24.02.2017.
+ * The Library Managemet System Inteface
+ * <p>Created by eksor on 24.02.2017.</p>
  */
 public interface ManagementSystem {
 
@@ -11,7 +12,7 @@ public interface ManagementSystem {
 
     void writeBookFile(String filename);
 
-    String login(String name, String pass);
+    Person login(String name, String pass);
 
 
 }
