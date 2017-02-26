@@ -80,7 +80,7 @@ public class Person {
 
         if(obj instanceof Person){
             Person pr = (Person)obj;
-            return this.ID == pr.ID;
+            return this.ID.equals(pr.ID);
         }
         return false;
     }

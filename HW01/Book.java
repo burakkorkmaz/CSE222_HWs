@@ -2,28 +2,26 @@
  * Created by eksor on 25.02.2017.
  */
 public class Book {
-    private String ISBN;
+    private String ID;
     private String name;
     private String year;
     private String author;
     private String borrower;
-    private String borrowDate;
 
-    public Book(String isbn, String name, String year, String author, String borrower, String borrowDate) {
-        ISBN = isbn;
+    public Book(String id, String name, String year, String author, String borrower) {
+        ID = id;
         this.name = name;
         this.year = year;
         this.author = author;
         this.borrower = borrower;
-        this.borrowDate = borrowDate;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getID() {
+        return ID;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -58,26 +56,19 @@ public class Book {
         this.borrower = borrower;
     }
 
-    public String getBorrowDate() {
-        return borrowDate;
-    }
-
-    public void setBorrowDate(String borrowDate) {
-        this.borrowDate = borrowDate;
-    }
 
     @Override
     public String toString() {
-        return "| ISBN: " + getISBN() + " | Name: " + getName() + " | Year: " + getYear() + " | Author: " +
-                getAuthor() + " | Borrower: " + getBorrower() + " | Borrow Date: " + getBorrowDate() + " |\n";
+        return "| ID: " + getID() + " | Name: " + getName() + " | Year: " + getYear() + " | Author: " +
+                getAuthor() + " | Borrower: " + getBorrower() + " |\n";
     }
 
     @Override
-    public boolean equals(Object obs){
+    public boolean equals(Object obs) {
 
-        if(obs instanceof Book){
+        if (obs instanceof Book) {
             Book bk = (Book) obs;
-            return this.name==bk.name;
+            return this.name.equals(bk.name);
         }
         return false;
 

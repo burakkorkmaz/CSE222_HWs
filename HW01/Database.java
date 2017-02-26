@@ -22,10 +22,10 @@ public class Database implements ManagementSystem {
      */
     private static final int PERSON_ATTRIBUTES = 5;
     /**
-     * The numver of Book class attributes ->
-     * ISBN, Name, Year, Author, Borrower, Borrow Date
+     * The number of Book class attributes ->
+     * ID, Name, Year, Author, Borrower
      */
-    private static final int BOOK_ATTRIBUTES = 6;
+    private static final int BOOK_ATTRIBUTES = 5;
 
     private ArrayList<Person> users = new ArrayList<>();
     private ArrayList<Book> books = new ArrayList<>();
@@ -96,7 +96,7 @@ public class Database implements ManagementSystem {
                     if (token[i].contains(";"))
                         throw new Error("Wrong Entry detected! Please do not use semicolon in the entries.");
                 }
-                Book book = new Book(token[0], token[1], token[2], token[3], token[4], token[5]);
+                Book book = new Book(token[0], token[1], token[2], token[3], token[4]);
                 books.add(book);
 
             }
@@ -141,7 +141,7 @@ public class Database implements ManagementSystem {
                 stream.append(SEPARATOR);
 
             }
-            System.out.println("User Records added to CSV file.\n");
+            System.out.println("\nUser Records added to CSV file Successfully.\n");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -165,7 +165,7 @@ public class Database implements ManagementSystem {
 
             stream = new FileWriter(filename);
             for (Book b : books) {
-                stream.append(b.getISBN());
+                stream.append(b.getID());
                 stream.append(DELIMITER);
                 stream.append(b.getName());
                 stream.append(DELIMITER);
@@ -174,12 +174,10 @@ public class Database implements ManagementSystem {
                 stream.append(b.getAuthor());
                 stream.append(DELIMITER);
                 stream.append(b.getBorrower());
-                stream.append(DELIMITER);
-                stream.append(b.getBorrowDate());
                 stream.append(SEPARATOR);
 
             }
-            System.out.println("Book Records added to CSV file.\n");
+            System.out.println("\nBook Records added to CSV file Successfully.\n");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
