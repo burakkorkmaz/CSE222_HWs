@@ -1,27 +1,27 @@
 package tr.edu.gtu.bkorkmaz.myStringBuilder;
 
-import java.util.LinkedList;
+import tr.edu.gtu.bkorkmaz.singleLinkedList.SingleLinkedList;
+
 
 /**
+ * Build string from anything and can be written the string to file.
+ *
  * Created by Burak Kağan Korkmaz on 14.03.2017.
  */
-public class myStringBuilder<E> extends LinkedList{
+public class myStringBuilder<E> extends SingleLinkedList{
 
-    private LinkedList<E> LL;
+    E [] array;
 
-    @Override
-    public Object get(int index) {
+    private SingleLinkedList<E> str = new SingleLinkedList<>();
 
-        return super.get(index);
-    }
 
-    @Override
-    public boolean add(Object o) {
-        return super.add(o);
+    public myStringBuilder(E anything){
+
+        append(anything);
     }
 
     public void append(E anything){
-
+        str.addLast(anything);
     }
 
     public String toStringIndex(){
@@ -38,5 +38,4 @@ public class myStringBuilder<E> extends LinkedList{
     public String toString(){
         return super.toString();
     }
-
 }

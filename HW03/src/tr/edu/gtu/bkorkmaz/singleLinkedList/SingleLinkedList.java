@@ -59,12 +59,19 @@ public class SingleLinkedList<E> {
      */
     private Node<E> getNode(int index){
         Node<E> node = head;
-        for(int i = 0; i < index && node != null; ++i){
+        for(int i = 0; i < index && node != null; ++i) {
+            if (node.next == null){
+                return null;
+            }
             node = node.next;
         }
         return node;
     }
 
+    /**
+     * Gets garbage node
+     * @return node
+     */
     private Node<E> getGarbage(){
         Node<E> temp = garbage;
         if (size(garbage) <= 1 ){
@@ -76,11 +83,28 @@ public class SingleLinkedList<E> {
         return temp;
     }
 
+    /**
+     * use Garbage
+     * @param node
+     * @param item
+     * @return
+     */
+    private boolean useGarbage(Node <E> node, E item){
+        if(size(garbage) > 0){
+            Node <E> temp = node;
+            node = getGarbage();
+            node.data = item;
+            node.next = temp;
+            return true;
+        }
+        return false;
+    }
     private void collectGarbage(Node<E> head){
 
         head.next = garbage; //TODO: check this
         garbage = head;
     }
+
     /** Finds the size of a list.
      @param head The head of the current list
      @return The size of the current list
@@ -97,12 +121,7 @@ public class SingleLinkedList<E> {
      * @param item The item to be added
      */
     private void addFirst(E item){
-        if(size(garbage) > 0){
-            Node <E> temp = head;
-            head = getGarbage();
-            head.next = temp;//TODO: check this
-        }
-        else {
+        if(!useGarbage(head, item)){
             head = new Node<>(item, head);
         }
     }
@@ -113,16 +132,17 @@ public class SingleLinkedList<E> {
      * @param item The item to insert
      */
     private void addAfter(Node<E> node, E item){
-        if(node.next == null){
+
+        if(node != null && node.next == null){
             addLast(node,item);
         }
-        if(size(garbage) > 0) {
-            Node <E> temp = head.next;
-            head.next = getGarbage();
-            head.next.next = temp;//TODO: check this
-        }
-        else {
-            node.next = new Node<E>(item, node.next);
+        else if(!useGarbage(node.next, item)) {
+            if(node == null){
+                node = new Node<E>(item);
+            }
+            else {
+                node.next = new Node<E>(item, node.next);
+            }
         }
     }
 
@@ -131,18 +151,44 @@ public class SingleLinkedList<E> {
      @param item The data for the new node
      */
     private void addLast(Node <E> head, E item) {
-        // If the list has just one element, add to it.
-        if (head.next == null)
-            if(size(garbage) > 0) {
-                Node <E> temp = head.next;
-                head.next = getGarbage();
-                head.next.next = temp;//TODO: check this
+        //empty list
+        if(head == null){
+            if(!useGarbage(head,item)){
+                head = new Node<E>(item);
             }
-            else {
+        }
+        // If the list has just one element, add to it.
+        if (head.next == null) {
+            if (!useGarbage(head.next, item)){
                 head.next = new Node<>(item);
             }
-        else
+        }
+        else {
             addLast(head.next, item); // Add to rest of list.
+        }
+    }
+
+    /**
+     * Remove first element
+     */
+    private void removeFirst(){
+        Node<E> temp = head;
+        if(head != null){
+            head = head.next;
+            collectGarbage(temp);
+        }
+    }
+
+    /**
+     *
+     * @param head List head
+     * @param pred Predecessor node of given node
+     */
+    private void remove(Node<E> head, Node<E> pred){
+        if(head != null){
+            collectGarbage(head);
+            pred.next = head.next;
+        }
     }
 
     /** Returns the string representation of a list.
@@ -154,6 +200,19 @@ public class SingleLinkedList<E> {
             return "";
         else
             return head.data + "\n" + toString(head.next);
+    }
+
+
+    public SingleLinkedList(){
+        head = null;
+        garbage = null;
+    }
+
+
+    public SingleLinkedList(E item){
+        head = null;
+        garbage = null;
+        addFirst(item);
     }
 
     /**
@@ -169,6 +228,7 @@ public class SingleLinkedList<E> {
         return node.data;
     }
 
+
     /**
      * Set the data value at index
      * @param index The position
@@ -182,7 +242,6 @@ public class SingleLinkedList<E> {
         node.data = item;
     }
 
-
     /** Wrapper method for finding the size of a list.
      @return The size of the list
      */
@@ -190,24 +249,12 @@ public class SingleLinkedList<E> {
         return size(head);
     }
 
-    /** Wrapper method for returning the string representation of a list.
-     @return The string representation of the list
-     */
-    public String toString() {
-        return toString(head);
-    }
-
     /** Wrapper method for adding a new node to the end of a list.
      @param item The data for the new node
      */
     public void addLast(E item) {
         if (head == null) {
-            if (size(garbage) > 0) {
-                Node<E> temp = head;
-                head = getGarbage();
-                head.next = temp;
-            }
-            else {
+            if (!useGarbage(head,item)){
                 head = new Node<>(item); // List has 1 node.
             }
         } else
@@ -220,30 +267,19 @@ public class SingleLinkedList<E> {
      * @param item
      */
     public void add(int index, E item){
-        if(index < 0 || index > size()){
+        int size = size();
+        if(index < 0 || index > size){
             throw new IndexOutOfBoundsException(Integer.toString(index));
         }
         if(index == 0){
             addFirst(item);
         }
+        else if(index == size){
+            addLast(item);
+        }
         else {
             Node<E> node = getNode(index);
             addAfter(node,item);
-        }
-    }
-
-    private void removeFirst(){
-        Node<E> temp = head;
-        if(head != null){
-            head = head.next;
-            collectGarbage(temp);
-        }
-    }
-
-    private void remove(Node<E> head, Node<E> pred){
-        if(head != null){
-            collectGarbage(head);
-            pred.next = head.next;
         }
     }
 
@@ -264,39 +300,37 @@ public class SingleLinkedList<E> {
     }
 
 
+    /**
+     * Show data in reverse
+     * @return reversed string
+     */
+    public String reverseToString(){
+        String result = "";
+        int index = size() - 1;
+        return reverseToString(index);
+    }
+
+    /**
+     * Wrapper method for reverseToString
+     * @param index Position
+     * @return Final reversed string
+     */
+    private String reverseToString(int index){
+        if(index == 0){
+            return  get(0).toString();
+        }
+
+
+        return get(index).toString() + " " + reverseToString(index - 1);
+
+    }
+
+    /** Wrapper method for returning the string representation of a list.
+     @return The string representation of the list
+     */
+    public String toString() {
+        return toString(head);
+    }
+
+
 }
-//    /** Removes a node from a list.
-//     post: The first occurrence of outData is removed.
-//     @param head The head of the current list
-//     @param pred The predecessor of the list head
-//     @param outData The data to be removed
-//     @return true if the item is removed
-//     and false otherwise
-//     */
-//    private boolean remove(Node <E> head, Node <E> pred, E outData) {
-//        if (head == null) // Base case: empty list.
-//            return false;
-//        else if (head.data.equals(outData)) { // 2nd base case.
-//            pred.next = head.next; // Remove head.
-//            return true;
-//        }
-//        else
-//            return remove(head.next, head, outData);
-//    }
-
-
-//    /** Wrapper method for removing a node (in LinkedListRec).
-//     @param outData The data to be removed
-//     @return true if the item is removed,
-//     and false otherwise
-//     */
-//    public boolean remove(E outData) {
-//        if (head == null)
-//            return false;
-//        else if (head.data.equals(outData)) {
-//            head = head.next;
-//            return true;
-//        }
-//        else
-//            return remove(head.next, head, outData);
-//    }
