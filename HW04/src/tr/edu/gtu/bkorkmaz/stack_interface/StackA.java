@@ -6,45 +6,47 @@ import java.util.ArrayList;
  * A stack which is extended from the ArrayList class
  * Created by Burak Kağan Korkmaz on 21.03.2017.
  */
-public class StackA <E> extends ArrayList implements StackInterface{
-
-
+public class StackA <E> extends ArrayList implements StackInterface<E>{
 
     /**
-     * Pushes an item onto the top of the stack_interface and returns the item pushed.
+     * Pushes an item onto the top of the stack and returns the
+     * item pushed.
      *
      * @param obj The object to be inserted.
      * @return The object inserted.
      */
-    public Object push(Object obj) {
-        return null;
+    public E push(E obj) {
+        this.add(obj);
+        return obj;
     }
 
+    @SuppressWarnings("unchecked")
     /**
-     * Returns the object at the top of the stack_interface and removes it.
-     * post: The stack_interface is one item smaller.
+     * Returns the object at the top of the stack and removes it.
+     * post: The stack is one item smaller.
      *
-     * @return The object at the top of the stack_interface.
+     * @return The object at the top of the stack.
      */
-    public Object pop() {
-        return null;
+    public E pop() {
+        return (E) this.remove(size() - 1);
     }
 
     /**
-     * Checks whether stack_interface is empty or not.
+     * Checks whether stack is empty or not.
      *
-     * @return True if the stack_interface is empty, <br>False otherwise.
+     * @return True if the stack is empty, <br>False otherwise.
      */
     public boolean isEmpty() {
-        return false;
+        return super.isEmpty();
     }
 
     /**
-     * Returns the number of items in the stack_interface.
-     *
+     * Returns the number of items in the stack.
      * @return The number of item.
      */
-    public int size() {
-        return 0;
+    public int size(){
+        return super.size();
     }
+
+
 }

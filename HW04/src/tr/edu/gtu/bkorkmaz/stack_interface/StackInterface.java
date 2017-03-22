@@ -8,27 +8,28 @@ package tr.edu.gtu.bkorkmaz.stack_interface;
 public interface StackInterface <E>{
 
     /**
-     * Pushes an item onto the top of the stack_interface and returns the item pushed.
+     * Pushes an item onto the top of the stack and returns the
+     * item pushed.
      * @param obj The object to be inserted.
      * @return The object inserted.
      */
     E push(E obj);
 
     /**
-     * Returns the object at the top of the stack_interface and removes it.
-     * post: The stack_interface is one item smaller.
-     * @return The object at the top of the stack_interface.
+     * Returns the object at the top of the stack and removes it.
+     * post: The stack is one item smaller.
+     * @return The object at the top of the stack.
      */
     E pop();
 
     /**
-     * Checks whether stack_interface is empty or not.
-     * @return True if the stack_interface is empty, <br>False otherwise.
+     * Checks whether stack is empty or not.
+     * @return True if the stack is empty, <br>False otherwise.
      */
     boolean isEmpty();
 
     /**
-     * Returns the number of items in the stack_interface.
+     * Returns the number of items in the stack.
      * @return The number of item.
      */
     int size();

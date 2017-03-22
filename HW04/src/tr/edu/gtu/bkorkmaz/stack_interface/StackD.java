@@ -1,71 +1,79 @@
 package tr.edu.gtu.bkorkmaz.stack_interface;
 
+import java.util.EmptyStackException;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
  * Created by Burak Kağan Korkmaz on 21.03.2017.
  */
-public class StackD <E> implements StackInterface{
+public class StackD <E> implements StackInterface<E> {
 
-    private StackD myStackD = new Queue<E>() {
-        /**
-         * Returns the number of elements in this collection.  If this collection
-         * contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
-         * <tt>Integer.MAX_VALUE</tt>.
-         *
-         * @return the number of elements in this collection
-         */
-        @Override
-        public int size() {
-            return 0;
-        }
+    private Queue myStackD;
 
-        /**
-         * Returns <tt>true</tt> if this collection contains no elements.
-         *
-         * @return <tt>true</tt> if this collection contains no elements
-         */
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-    };
+    public StackD() {
+        myStackD = new LinkedList();
+    }
+
 
     /**
-     * Pushes an item onto the top of the stack_interface and returns the item pushed.
+     * Pushes an item onto the top of the stack and returns the
+     * item pushed.
      *
      * @param obj The object to be inserted.
      * @return The object inserted.
      */
-    public Object push(Object obj) {
-        return null;
+    public E push(E obj) {
+        myStackD.offer(obj);
+        return obj;
     }
 
     /**
-     * Returns the object at the top of the stack_interface and removes it.
-     * post: The stack_interface is one item smaller.
+     * Returns the object at the top of the stack and removes it.
+     * post: The stack is one item smaller.
      *
-     * @return The object at the top of the stack_interface.
+     * @return The object at the top of the stack.
      */
-    public Object pop() {
-        return null;
+    public E pop() {
+        if(isEmpty()){
+            throw new EmptyStackException();
+        }
+        else{
+            int size = size();
+            for (int i = 0; i < size - 1 ; i++) {
+                myStackD.add(myStackD.remove());
+            }
+            return (E) myStackD.remove();
+        }
     }
 
     /**
-     * Checks whether stack_interface is empty or not.
+     * Checks whether stack is empty or not.
      *
-     * @return True if the stack_interface is empty, <br>False otherwise.
+     * @return True if the stack is empty, <br>False otherwise.
      */
     public boolean isEmpty() {
-        return false;
+        return myStackD.isEmpty();
     }
 
     /**
-     * Returns the number of items in the stack_interface.
+     * Returns the number of items in the stack.
      *
      * @return The number of item.
      */
     public int size() {
-        return 0;
+        return myStackD.size();
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        E t;
+        for (int i = 0; i < size(); i++) {
+            t = (E) myStackD.remove();
+            s += t.toString();
+            myStackD.add(t);
+        }
+        return s;
     }
 }
