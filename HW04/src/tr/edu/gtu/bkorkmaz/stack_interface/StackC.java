@@ -9,6 +9,7 @@ import java.util.EmptyStackException;
  */
 public class StackC <E> implements StackInterface<E> {
 
+
     /** A Node is the building block for a single-linked list. */
     private static class Node < E > {
         // Data Fields
@@ -39,8 +40,17 @@ public class StackC <E> implements StackInterface<E> {
 
     // Data Fields
     /** The reference to the first stack node. */
-    private Node < E > topOfStackRef = null;
+    private Node < E > topOfStackRef;
     private int size = 0;
+
+    /**
+     * Constructor of StackC
+     */
+    public StackC() {
+        topOfStackRef = null;
+        size = 0;
+    }
+
     /**
      * Pushes an item onto the top of the stack and returns the
      * item pushed.
