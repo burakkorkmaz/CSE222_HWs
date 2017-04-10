@@ -112,7 +112,29 @@ public class BinaryTree <E>
             return data.toString();
         }
 
+        public E getData() {
+            return data;
+        }
 
+        public Node<E> getLeft() {
+            return left;
+        }
+
+        public Node<E> getRight() {
+            return right;
+        }
+
+        public Node<E> getParent() {
+            return parent;
+        }
+
+        public int getFlag() {
+            return flag;
+        }
+
+        public void setFlag(int flag){
+            this.flag = flag;
+        }
     }
 
     // Data Field
@@ -193,6 +215,16 @@ public class BinaryTree <E>
         } else {
             return null;
         }
+    }
+
+
+
+    protected void setNodeData(Node<E> node, Node<E> left, Node<E> right,
+                        Node<E> parent) {
+        node.left = left;
+        node.right = right;
+        node.parent = parent;
+        node.flag = 0;
     }
 
     /**
